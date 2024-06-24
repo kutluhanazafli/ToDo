@@ -44,3 +44,10 @@ if(file_exists(BASEDIR . '/Controller/' . $config['route'][0] . '.php')) {
 }
 
 
+if (isset($_SESSION['error'])) {
+    unset($_SESSION['error']);
+}
+
+if (isset($_SESSION['post'])) {
+    unset($_SESSION['post']);
+}

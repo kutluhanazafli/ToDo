@@ -9,10 +9,12 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg"> <?= lang('login') ?> </p>
-
+      <?php
+      echo get_session('error') ? '<div class="alert alert-' . $_SESSION['error']['type'] . '">' . $_SESSION['error']['message'] . '</div>' : null;
+      ?>
       <form action="<?= URL . 'login' ?>" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" name="email" placeholder=" <?= lang('email') ?> ">
+          <input type="email" class="form-control" value="<?= $_SESSION['post']['email'] ?? '' ?>" name="email" placeholder=" <?= lang('email') ?> ">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -20,7 +22,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder=" <?= lang('password') ?> ">
+          <input type="password" class="form-control" value="<?= $_SESSION['post']['password'] ?? '' ?>" name="password" placeholder=" <?= lang('password') ?> ">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

@@ -17,6 +17,20 @@ function view($viewName, $pageData = []){
         return false;
 }
 
+function model($modelName, $pageData = [], $data_process = null){
+    global $db;
+    if ($data_process != null){
+        $process = $data_process;
+    }
+    $data = $pageData;
+
+    if(file_exists(BASEDIR . '/Model/' . $modelName . '.php')) {
+        $return = require BASEDIR . '/Model/' . $modelName . '.php';
+        return $return;
+    } else
+        return false;
+}
+
 function assets($assetName){
     if(file_exists(BASEDIR . '/public/' . $assetName))
         return URL . '/public/' . $assetName;
@@ -66,4 +80,8 @@ function get_cookie($index) {
     } else {
         return false;
     }
+}
+
+function redirect($url) {
+    header('Location: ' . URL . $url);
 }
