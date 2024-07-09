@@ -11,13 +11,13 @@ define('URL', $url);
 const DEV_MODE = true;
 
 // Read database configuration from .ini file and store as array
-$config = parse_ini_file(BASEDIR . '/config/config.ini.php');
+$ini = parse_ini_file(BASEDIR . '/config/config.ini.php');
 
 // Database connection
-$host = $config['host'];
-$dbname = $config['dbname'];
-$username = $config['username'];
-$password = $config['password'];
+$host = $ini['host'];
+$dbname = $ini['dbname'];
+$username = $ini['username'];
+$password = $ini['password'];
 
 try {
     $db = new PDO("mysql:host=".$host.";dbname=".$dbname.";charset=utf8", $username, $password);
