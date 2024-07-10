@@ -29,13 +29,13 @@
 
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Category List</h3>
+                <h3 class="card-title">Todo List</h3>
 
                 <div class="card-tools">
-                  <div> 
+                  <div>
                     <a href="<?= url('categories/add'); ?>" class="btn btn-sm btn-dark">
-                      Add Category
-                    </a> 
+                      Add Todo
+                    </a>
                   </div>
 
                   <!-- <ul class="pagination pagination-sm float-right">
@@ -49,43 +49,65 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-              <?php
-              echo get('message') ? '<div class="alert alert-' . get('type') . '">' . get('message') . '</div>' : null;
-              ?>
+                <?php
+                echo get('message') ? '<div class="alert alert-' . get('type') . '">' . get('message') . '</div>' : null;
+                ?>
                 <table class="table">
                   <thead>
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Title</th>
-                      <th>Created Date</th>
-                      <th>Updated Date</th>
+                      <th>Category</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Progress</th>
+                      <th>Label</th>
                       <th style="width: 40px">Process</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <?php $count = 1; foreach($data as $key => $value): ?>
-                    <tr>
-                      <td><?= $count++ ?>.</td>
-                      <td><?= $value['category_title'] ?></td>
-                      <td>
-                        <?= $value['category_created_date'] ?>
-                      </td>
-                      <td>
-                        <?= $value['category_updated_date'] ?>
-                      </td>
-                      <td>
-                        <div class="btn-group btn-group-sm">
-                          <a href="<?= URL . 'categories/remove/' . $value['category_id']; ?>" class="btn btn-sm btn-danger">
-                            Remove
-                          </a>
-                        
-                          <a href="<?= URL . 'categories/edit/' . $value['category_id']; ?>" class="btn btn-sm btn-warning">
-                            Update
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  <?php endforeach; ?>
+                    <?php $count = 1;
+                    foreach ($data as $key => $value) : ?>
+                      <tr id="row_<?= $value['todo_id'] ?>">
+                        <td>
+                          <?= $count++ ?>.
+                        </td>
+                        <td>
+                          <?= $value['todo_title'] ?>
+                        </td>
+                        <td>
+                          <?= $value['category_title'] ?>
+                        </td>
+                        <td>
+                          <?= $value['todo_start_date'] ?>
+                        </td>
+                        <td>
+                          <?= $value['todo_end_date'] ?>
+                        </td>
+                        <td>
+                          <?= $value['todo_progress'] ?>%
+                          <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-danger" style="width: <?= $value['todo_progress'] ?>%"></div>
+                          </div>
+                        </td>
+                        <td>
+                          <span class="badge bg-<?= $value['todo_status'] == 'a' ? 'success' : 'danger'; ?>">
+                            <?= $value['todo_status'] == 'a' ? 'Active' : 'Passive'; ?>
+                          </span>
+                        </td>
+                        <td>
+                          <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeTodo('<?= $value['todo_id'] ?>')">
+                              Remove
+                            </button>
+
+                            <a href="<?= URL . 'todo/edit/' . $value['todo_id']; ?>" class="btn btn-sm btn-warning">
+                              Update
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
@@ -116,6 +138,33 @@
 <script src="<?= assets('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <!-- AdminLTE App -->
 <script src="<?= assets('js/adminlte.min.js'); ?>"></script>
+<!-- Sweetalert -->
+<script src="<?= assets('plugins/sweetalert2/sweetalert2.all.min.js'); ?>"></script>
+<!-- Axios -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  function removeTodo(id) {
+
+    let formData = new FormData();
+    formData.append('id', id);
+
+    axios.post('<?= url('api/removetodo'); ?>', formData).then(res => {
+
+      if (res.data.id) {
+        let row = document.getElementById('row_' + res.data.id);
+        row.remove();
+      }
+
+      Swal.fire(
+        res.data.title,
+        res.data.msg,
+        res.data.status
+      );
+
+    }).catch(err => console.log(err));
+
+  }
+</script>
 </body>
 
 </html>

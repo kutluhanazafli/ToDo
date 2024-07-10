@@ -40,6 +40,7 @@
               <form id="todo" action="" method="POST">
 
                 <div class="card-body">
+
                   <div class="form-group">
                     <label for="category_id">Categories</label>
                     <select class="form-control" id="category_id" name="category_id">
@@ -49,26 +50,43 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
+
                   <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" name="todo_title" placeholder="Enter ToDo title">
                   </div>
+
                   <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="todo_description" placeholder="Enter ToDo title">
                   </div>
+
+                  <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="todo_status">
+                      <option value="a">Active</option>
+                      <option value="p">Passive</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="progress">Progress</label>
+                    <input type="range" value="0" min="0" max="100" class="form-control" id="progress" name="todo_progress">
+                  </div>
+
                   <div class="form-group">
                     <label for="color">Color</label>
                     <input type="color" class="form-control" id="color" name="todo_color" value="#007bff">
                   </div>
+
                   <div class="form-group">
                     <label for="start_date">Start Date</label>
                     <div class="row">
                       <input type="date" class="form-control col-8" id="start_date" name="todo_start_date">
                       <input type="time" class="form-control col-4" id="start_date_time" name="todo_start_date_time">
                     </div>
-                    
                   </div>
+
                   <div class="form-group">
                     <label for="end_date">End Date</label>
                     <div class="row">
@@ -76,6 +94,7 @@
                       <input type="time" class="form-control col-4" id="end_date_time" name="todo_end_date_time">
                     </div>
                   </div>
+
                 </div>
                 <!-- /.card-body -->
 
@@ -106,10 +125,11 @@
 <script src="<?= assets('plugins/jquery/jquery.min.js'); ?>"></script>
 <!-- Bootstrap 4 -->
 <script src="<?= assets('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<!-- Sweetalert -->
-<script src="<?= assets('plugins/sweetalert2/sweetalert2.all.min.js'); ?>"></script>
 <!-- AdminLTE App -->
 <script src="<?= assets('js/adminlte.min.js'); ?>"></script>
+<!-- Sweetalert -->
+<script src="<?= assets('plugins/sweetalert2/sweetalert2.all.min.js'); ?>"></script>
+<!-- Axios -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   const todo = document.getElementById('todo');
@@ -124,6 +144,8 @@
     let end_date = document.getElementById('end_date').value;
     let end_date_time = document.getElementById('end_date_time').value;
     let category_id = document.getElementById('category_id').value;
+    let status = document.getElementById('status').value;
+    let progress = document.getElementById('progress').value;
 
     let formData = new FormData();
     formData.append('title', title);
@@ -134,6 +156,8 @@
     formData.append('end_date', end_date);
     formData.append('end_date_time', end_date_time);
     formData.append('category_id', category_id);
+    formData.append('status', status);
+    formData.append('progress', progress);
 
     axios.post('<?= url('api/addtodo'); ?>', formData).then(res => {
       
