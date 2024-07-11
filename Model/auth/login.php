@@ -29,6 +29,7 @@ if (!$data['password']) {
         add_session('user_name', $user['user_name']);
         add_session('user_surname', $user['user_surname']);
         add_session('user_fullname', $user['user_fullname']);
+        add_session('user_password', $user['user_password']);
         add_session('user_email', $user['user_email']);
         add_session('login', true);
 

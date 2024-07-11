@@ -65,6 +65,7 @@
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="todo_status">
                       <option value="a">Active</option>
+                      <option value="c">Continue</option>
                       <option value="p">Passive</option>
                     </select>
                   </div>

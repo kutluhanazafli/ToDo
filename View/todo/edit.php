@@ -65,6 +65,7 @@
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="todo_status">
                     <option <?= $data['todo_status'] == 'a' ? ' selected="selected" ' : null; ?> value="a">Active</option>
+                    <option <?= $data['todo_status'] == 'c' ? ' selected="selected" ' : null; ?> value="c">Continue</option>
                     <option <?= $data['todo_status'] == 'p' ? ' selected="selected" ' : null; ?> value="p">Passive</option>
                     </select>
                   </div>

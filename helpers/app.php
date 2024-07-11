@@ -103,3 +103,8 @@ function _p($data) {
     print_r($data);
     echo '</pre>';
 }
+
+function default_lang(){
+    global $config;
+    return $config['lang'];
+}

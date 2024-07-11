@@ -33,7 +33,7 @@
 
                 <div class="card-tools">
                   <div>
-                    <a href="<?= url('categories/add'); ?>" class="btn btn-sm btn-dark">
+                    <a href="<?= url('todo/add'); ?>" class="btn btn-sm btn-dark">
                       Add Todo
                     </a>
                   </div>
@@ -91,8 +91,8 @@
                           </div>
                         </td>
                         <td>
-                          <span class="badge bg-<?= $value['todo_status'] == 'a' ? 'success' : 'danger'; ?>">
-                            <?= $value['todo_status'] == 'a' ? 'Active' : 'Passive'; ?>
+                          <span class="badge bg-<?= status($value['todo_status'])['color']; ?>">
+                          <?= status($value['todo_status'])['title']; ?>
                           </span>
                         </td>
                         <td>
